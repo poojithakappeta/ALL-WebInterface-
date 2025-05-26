@@ -65,7 +65,7 @@ except Exception as e:
 # ✅ Load LeukVision Fusion Model
 try:
     leukvision_model = FusionModel(num_classes=4, prompt_dim=128, wavelet_dim=4096).to(device)
-    leukvision_model.load_state_dict(torch.load("model/vit_resnet_fusion_model.pth", map_location=device))
+    leukvision_model.load_state_dict(torch.load(model_paths["ViT_Multiclass"], map_location=device))
     leukvision_model.eval()
     models["LeukVision"] = leukvision_model
 except Exception as e:
