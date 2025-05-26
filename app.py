@@ -9,6 +9,7 @@ from PIL import Image
 from fusion_model import FusionModel
 from wavelet_utils import extract_wavelet_features
 from transformers import ViTForImageClassification  # keep if still using binary ViT
+import gdown
 
 # ✅ Initialize Flask App
 app = Flask(__name__)
@@ -21,13 +22,29 @@ MULTICLASS_LABELS = ["Benign", "Early", "Pre", "Pro"]
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # ✅ Load Models from 'model' Folder
+import gdown
+
 model_paths = {
-    "ViT_Binary": "model/vit_binary_all_healthy.pth",  # ✅ Used for detection
-    "ViT_Multiclass": "vit_resnet_fusion_model",
-    "MobileNet": "model/mobilenet_xgboost.pkl",
-    "VGG": "model/vgg16_svm.pkl",
-    "ShuffleNet": "model/shufflenet_rf.pkl"
+    "ViT_Binary": "vit_binary_all_healthy.pth",
+    "ViT_Multiclass": "vit_resnet_fusion_model.pth",
+    "MobileNet": "mobilenet_xgboost.pkl",
+    "VGG": "vgg16_svm.pkl",
+    "ShuffleNet": "shufflenet_rf.pkl"
 }
+
+drive_links = {
+    "ViT_Binary": "https://drive.google.com/uc?id=1hcl-kEyuAw8KQf0-Kk8Cmi8XiVJABgTY",
+    "ViT_Multiclass": "https://drive.google.com/uc?id=1r4Mjn7j_UStJpdzRiNUFFilinS7ofWqC",
+    "MobileNet": "https://drive.google.com/uc?id=1SE6PikSqMckgei-VT0JXcTjOZp0-dzyq",
+    "VGG": "https://drive.google.com/uc?id=1pbEAM1U0qcQOv5gHcQmUnosrbl9MeTqp",
+    "ShuffleNet": "https://drive.google.com/uc?id=11atr-AqGJcWmI_aOu441Gkc5mY4qYiyS"
+}
+
+# Download models if not already present
+for name, path in model_paths.items():
+    if not os.path.exists(path):
+        print(f"📥 Downloading {name} model...")
+        gdown.download(drive_links[name], path, quiet=False)
 
 # ✅ Load ViT Models (Binary & Multiclass)
 models = {}
