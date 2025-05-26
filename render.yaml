@@ -2,9 +2,6 @@ services:
   - type: web
     name: leukvision-web
     env: python
-    plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: python app.py
-    envVars:
-      - key: PORT
-        value: 10000
+    startCommand: gunicorn app:app
+    plan: free
