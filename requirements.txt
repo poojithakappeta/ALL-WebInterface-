@@ -6,3 +6,4 @@ joblib
 gdown
 Pillow
 matplotlib
+pywavelets
