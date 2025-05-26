@@ -1,9 +1,11 @@
 flask
+gunicorn
 torch
 torchvision
 transformers
-joblib
 gdown
-Pillow
-matplotlib
+pillow
+scikit-learn
+numpy
 pywavelets
+matplotlib
