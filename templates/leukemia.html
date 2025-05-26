@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    body {
+        background: url('/static/mgb5.jpg') no-repeat center center fixed;
+        background-size: cover;
+        color: white;
+    }
+
+    .container {
+        margin-top: 50px;
+        padding-bottom: 100px;
+    }
+
+    .info-card {
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .small-img {
+        width: 40%;
+        display: block;
+        margin: auto;
+        border-radius: 10px;
+    }
+
+    .accordion-button {
+        background: #343a40;
+        color: rgb(255, 255, 255);
+    }
+   
+   
+</style>
+
+<div class="container">
+    <h1 class="text-center mb-4">Understanding Leukemia</h1>
+
+    <div class="info-card">
+        <h2>What is Acute Lymphoblastic Leukemia (ALL)?</h2>
+        <p>Acute Lymphoblastic Leukemia (ALL) is a cancer that affects white blood cells, progressing rapidly. It is most common in children but can occur in adults.</p>
+        <img src="{{ url_for('static', filename='mbg1.jpg') }}" alt="Leukemia Overview" class="small-img">
+    </div>
+
+    <!-- Causes of Leukemia -->
+    <div class="info-card">
+        <h2>Causes & Risk Factors</h2>
+        <ul>
+            <li>Genetic mutations</li>
+            <li>Exposure to high radiation levels</li>
+            <li>Viral infections affecting blood cells</li>
+            <li>Family history of leukemia</li>
+        </ul>
+    </div>
+
+    <!-- Symptoms Dropdown -->
+    <h2 class="text-center">Symptoms of Leukemia</h2>
+    <div class="accordion" id="symptomsAccordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="symptomsEarly">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#earlySymptoms">
+                    🔹 Early Symptoms
+                </button>
+            </h2>
+            <div id="earlySymptoms" class="accordion-collapse collapse show">
+                <div class="accordion-body">
+                    <ul>
+                        <li>Frequent infections</li>
+                        <li>Unexplained bruising or bleeding</li>
+                        <li>Fatigue and weakness</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="symptomsAdvanced">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#advancedSymptoms">
+                    🔴 Advanced Symptoms
+                </button>
+            </h2>
+            <div id="advancedSymptoms" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    <ul>
+                        <li>Severe weight loss</li>
+                        <li>Swollen lymph nodes</li>
+                        <li>Persistent bone pain</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ALL Subtypes -->
+    <h2 class="text-center mt-4">Types of ALL</h2>
+    <div class="accordion" id="allTypesAccordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="typePre">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#preALL">
+                    🟢 Pre-ALL
+                </button>
+            </h2>
+            <div id="preALL" class="accordion-collapse collapse show">
+                <div class="accordion-body">Early immature cells with limited growth.</div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="typePro">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#proALL">
+                    🔵 Pro-ALL
+                </button>
+            </h2>
+            <div id="proALL" class="accordion-collapse collapse">
+                <div class="accordion-body">More developed, but still immature white blood cells.</div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="typeEarly">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#earlyALL">
+                    🟠 Early-ALL
+                </button>
+            </h2>
+            <div id="earlyALL" class="accordion-collapse collapse">
+                <div class="accordion-body">Intermediate stage before maturity.</div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="typeBenign">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#benignALL">
+                    ⚪ Benign-ALL
+                </button>
+            </h2>
+            <div id="benignALL" class="accordion-collapse collapse">
+                <div class="accordion-body">Non-cancerous but requires monitoring.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <h2 class="text-center mt-5">Frequently Asked Questions</h2>
+    <div class="faq-section">
+        <div class="accordion" id="faqAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="faqOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#answerOne">
+                        ❓ Can ALL be cured?
+                    </button>
+                </h2>
+                <div id="answerOne" class="accordion-collapse collapse">
+                    <div class="accordion-body">Yes, with early detection and aggressive treatment, ALL can be cured in many cases.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="faqTwo">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#answerTwo">
+                        ❓ What are the risk factors for ALL?
+                    </button>
+                </h2>
+                <div id="answerTwo" class="accordion-collapse collapse">
+                    <div class="accordion-body">Genetic mutations, radiation exposure, and infections can increase risk.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    body {
+        background-image: url('/static/mgb6.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+    }
+</style>
+
+<div class="container mt-4">
+    <h2 class="text-center text-white">Model Comparison</h2>
+
+    <div class="row mt-4">
+        <!-- LeukVision Fusion Model -->
+        <div class="col-md-12 text-white">
+            <h3>LeukVision (Fusion Model)</h3>
+            <p>
+                LeukVision is a novel fusion-based hybrid model that integrates ResNet50, Vision Transformer (ViT), 
+                class-specific Prompt Embeddings, and handcrafted features extracted using Haar Wavelet Transform. 
+                The combined 7040-dimensional feature vector is passed through a dense classifier for final prediction.
+                This model achieved <strong>100% accuracy</strong>, outperforming all others in the study.
+            </p>
+            <img src="/static/LeukVision.png" alt="LeukVision Confusion Matrix" class="img-fluid rounded shadow" width="400">
+        </div>
+
+        <!-- ShuffleNetV2 + Random Forest -->
+        <div class="col-md-12 mt-5 text-white">
+            <h3>ShuffleNetV2 + Random Forest</h3>
+            <p>
+                A lightweight hybrid model where ShuffleNetV2 is used as a feature extractor to generate 1024-dimensional 
+                vectors. These features are passed into a Random Forest classifier with 100 estimators. This approach 
+                balances speed and accuracy and achieved <strong>97.75% accuracy</strong>.
+            </p>
+            <img src="/static/shufflenet.png" alt="ShuffleNet + Random Forest Confusion Matrix" class="img-fluid rounded shadow" width="400">
+        </div>
+
+        <!-- MobileNetV2 + PCA + XGBoost -->
+        <div class="col-md-12 mt-5 text-white">
+            <h3>MobileNetV2 + PCA + XGBoost</h3>
+            <p>
+                This model uses MobileNetV2 for efficient feature extraction, followed by PCA to reduce dimensionality 
+                from 1280 to 100. The final classification is performed using XGBoost, a gradient boosting ensemble. 
+                This pipeline achieved a high <strong>98.25% accuracy</strong>.
+            </p>
+            <img src="/static/mobilenet.png" alt="MobileNet + XGBoost Confusion Matrix" class="img-fluid rounded shadow" width="400">
+        </div>
+
+        <!-- VGG16 + PCA + SVM -->
+        <div class="col-md-12 mt-5 text-white">
+            <h3>VGG16 + PCA + SVM</h3>
+            <p>
+                A classic deep learning setup using a custom VGG16 architecture for feature extraction, followed by PCA 
+                to reduce the feature vector to 200 components. An SVM classifier with an RBF kernel performs the final classification. 
+                This model achieved a reliable <strong>93.75% accuracy</strong>.
+            </p>
+            <img src="/static/vgg.png" alt="VGG16 + SVM Confusion Matrix" class="img-fluid rounded shadow" width="400">
+        </div>
+    </div>
+
+    <!-- Model Performance Graph -->
+    <div class="text-center mt-5 text-white">
+        <h3>Model Performance Comparison</h3>
+        <p>This graph shows the accuracy, precision, recall, and F1-score of each model for comparison.</p>
+        <img src="/static/model_comparison.png" alt="Model Performance Comparison" class="img-fluid rounded shadow" width="500">
+    </div>
+</div>  
+{% endblock %}

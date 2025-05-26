@@ -1,0 +1,7 @@
+dill
+gdown
+transformers
+flask
+torch
+joblib
+Pillow

@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-center">
+        <div class="box-container p-4">
+            <h2 class="text-center">Upload an Image for Detection</h2>
+
+            <!-- Upload Section -->
+            <div class="upload-section text-center">
+                <input type="file" id="fileInput" class="form-control mb-3" onchange="previewImage()">
+            </div>
+
+            <!-- Buttons -->
+            <div class="text-center">
+                <button class="btn btn-warning btn-lg me-2" onclick="detectImage()">Detect (Binary Model)</button>
+                <button class="btn btn-info btn-lg" onclick="classifyImage()">Classify (Multiclass Model)</button>
+            </div>
+
+            <!-- Display Image & Predictions -->
+            <div class="row mt-4 d-flex align-items-center">
+                <!-- Image Display -->
+                <div class="col-md-4 text-center">
+                    <h4>Selected Image:</h4>
+                    <div class="image-box">
+                        <img id="preview" class="img-fluid rounded shadow">
+                    </div>
+                </div>
+
+                <!-- Prediction Display (Aligned Right) -->
+                <div class="col-md-8">
+                    <div class="result-box p-3 shadow" id="resultBox" style="display: none;">
+                        <h3 id="predictionText" class="fw-bold">✅ Prediction: </h3>
+                        <p id="aboutClass"></p>
+                        <p id="nextSteps"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+    function previewImage() {
+        let fileInput = document.getElementById("fileInput").files[0];
+        let preview = document.getElementById("preview");
+
+        if (fileInput) {
+            let fileExtension = fileInput.name.split('.').pop().toLowerCase();
+
+            if (fileExtension === "tif" || fileExtension === "tiff") {
+                preview.src = "static/uploaded_image.png"; // Show converted PNG
+            } else {
+                preview.src = URL.createObjectURL(fileInput);
+            }
+
+            preview.style.display = "block";
+        }
+    }
+
+    function detectImage() {
+        processImage("detect");
+    }
+    
+    function classifyImage() {
+        processImage("classify");
+    }
+
+    function processImage(endpoint) {
+        let fileInput = document.getElementById("fileInput").files[0];
+        if (!fileInput) {
+            alert("Please select a file first.");
+            return;
+        }
+
+        let formData = new FormData();
+        formData.append("file", fileInput);
+
+        fetch("http://127.0.0.1:5000/" + endpoint, {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("predictionText").innerText = "✅ Prediction: " + data.prediction;
+            document.getElementById("preview").src = data.image_url;
+
+            let nextSteps = {
+                "ALL": "⚠ Next Steps: Consult a hematologist immediately.",
+                "Healthy": "✅ Next Steps: Maintain a healthy lifestyle.",
+                "Benign": "🔎 Next Steps: Follow up with your doctor for confirmation.",
+                "Early": "🚨 Next Steps: Seek medical attention for early treatment.",
+                "Pre": "🩺 Next Steps: Regular testing is advised.",
+                "Pro": "⚠ Next Steps: Immediate chemotherapy or targeted therapy is needed."
+            };
+
+            document.getElementById("nextSteps").innerText = nextSteps[data.prediction];
+            document.getElementById("resultBox").style.display = "block";
+        })
+        .catch(error => console.error("Error:", error));
+    }
+</script>
+
+<!-- Custom CSS -->
+<style>
+    .box-container {
+        width: 80%;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.3);
+    }
+
+    .image-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 250px;
+        width: 250px;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.4);
+        margin-left: 15px;
+    }
+
+    .result-box {
+        background: black;
+        color: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.5);
+    }
+</style>
+{% endblock %}

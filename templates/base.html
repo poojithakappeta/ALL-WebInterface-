@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Leuk∞Vision{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Bootstrap JS (for accordion functionality) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        /* Background */
+        body {
+            background: url("{{ url_for('static', filename='mgb5.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            padding-bottom: 60px; /* Prevents footer overlap */
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-radius: 10px;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            font-style: italic;
+            letter-spacing: 1px;
+            color: white;
+            margin-left: 20px;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0px 0px 10px rgb(255, 0, 4), 0px 0px 20px #0ff;
+        }
+
+        .nav-links {
+            margin-right: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.2rem;
+            margin: 0 15px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .nav-links a:hover {
+            color: #c3171d;
+            text-shadow: 0px 0px 10px #c31717;
+        }
+
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            font-size: 14px;
+            z-index: 1000;
+        }
+
+        /* Fix for overlapping content due to fixed navbar */
+        .content-wrapper {
+            margin-top: 80px; /* Adjust based on navbar height */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">Leuk∞Vision</div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/detect_page">Detect</a>
+            <a href="/leukemia">Leukemia Info</a>
+            <a href="/models">Model Comparison</a>
+           
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <div class="container content-wrapper">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        © 2025 Leuk∞Vision. All rights reserved.
+    </div>
+</body>
+</html>

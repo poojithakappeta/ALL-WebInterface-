@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center">ViT Attention Heatmap</h2>
+    <div class="upload-section text-center mt-4">
+        <input type="file" id="fileInput" class="form-control mb-3" onchange="previewImage()">
+        <button class="btn btn-danger mt-2" onclick="generateHeatmap()">Generate Heatmap</button>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-6 text-center">
+            <h4>Original Image</h4>
+            <img id="preview" class="img-fluid rounded shadow" style="display: none;">
+        </div>
+        <div class="col-md-6 text-center">
+            <h4>Attention Heatmap</h4>
+            <img id="heatmap" class="img-fluid rounded shadow" style="display: none;">
+        </div>
+    </div>
+</div>
+
+<script>
+    function previewImage() {
+        let file = document.getElementById("fileInput").files[0];
+        if (file) {
+            document.getElementById("preview").src = URL.createObjectURL(file);
+            document.getElementById("preview").style.display = "block";
+        }
+    }
+
+    function generateHeatmap() {
+        let file = document.getElementById("fileInput").files[0];
+        if (!file) return alert("Please upload an image first.");
+
+        let formData = new FormData();
+        formData.append("file", file);
+
+        fetch("/heatmap", {
+            method: "POST",
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("preview").src = data.original_url;
+            document.getElementById("heatmap").src = data.heatmap_url;
+            document.getElementById("heatmap").style.display = "block";
+        })
+        .catch(err => console.error("Error generating heatmap:", err));
+    }
+</script>
+{% endblock %}
